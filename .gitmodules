@@ -12,10 +12,10 @@
 	url = git://git.linphone.org/sofia-sip.git
 [submodule "submodules/ortp"]
 	path = submodules/ortp
-	url = git://git.linphone.org/ortp.git
+	url = https://github.com/baogechen/ortp.git
 [submodule "submodules/cmake-builder"]
 	path = submodules/cmake-builder
-	url = git://git.linphone.org/linphone-cmake-builder
+	url = https://github.com/baogechen/linphone-cmake-builder
 [submodule "submodules/mediastreamer2"]
 	path = submodules/mediastreamer2
 	url = git://git.linphone.org/mediastreamer2.git
