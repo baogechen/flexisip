@@ -89,7 +89,7 @@ struct RegistrarDbRedisAsync::RegistrarUserData {
 
 RegistrarDbRedisAsync::RegistrarDbRedisAsync(Agent *ag, RedisParameters params)
 	: RegistrarDb(ag->getPreferredRoute()), mAgent(ag), mContext(NULL), mDomain(params.domain),
-	  mAuthPassword(params.auth), mPort(params.port), mTimeout(params.timeout), mRoot(ag->getRoot()),
+	  mAuthPassword(params.auth), mPort(params.port),mDb(params.db), mTimeout(params.timeout), mRoot(ag->getRoot()),
 	  mReplicationTimer(NULL), mSlaveCheckTimeout(params.mSlaveCheckTimeout) {
 	mSerializer = RecordSerializer::get();
 	mCurSlave = 0;
@@ -378,7 +378,7 @@ bool RegistrarDbRedisAsync::connect() {
 		mContext = NULL;
 		return false;
 	}
-
+	redisAsyncCommand(mContext, NULL, NULL, "SELECT %d", mDb);
 	if (!mAuthPassword.empty()) {
 		redisAsyncCommand(mContext, shandleAuthReply, this, "AUTH %s", mAuthPassword.c_str());
 	} else {

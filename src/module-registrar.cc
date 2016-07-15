@@ -123,6 +123,7 @@ class ModuleRegistrar : public Module, public ModuleToolbox {
 			// Redis config support
 			{String, "redis-server-domain", "Domain of the redis server. ", "localhost"},
 			{Integer, "redis-server-port", "Port of the redis server.", "6379"},
+			{Integer, "redis-server-db", "DB number of the redis server.", "0"},
 			{String, "redis-auth-password", "Authentication password for redis. Empty to disable.", ""},
 			{Integer, "redis-server-timeout", "Timeout in milliseconds of the redis connection.", "1500"},
 			{String, "redis-record-serializer", "Serialize contacts with: [C, protobuf, json, msgpack]", "protobuf"},

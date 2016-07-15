@@ -489,6 +489,7 @@ RegistrarDb *RegistrarDb::get(Agent *ag) {
 			RedisParameters params;
 			params.domain = registrar->get<ConfigString>("redis-server-domain")->read();
 			params.port = registrar->get<ConfigInt>("redis-server-port")->read();
+			params.db = registrar->get<ConfigInt>("redis-server-db")->read();
 			params.timeout = registrar->get<ConfigInt>("redis-server-timeout")->read();
 			params.auth = registrar->get<ConfigString>("redis-auth-password")->read();
 			params.mSlaveCheckTimeout = registrar->get<ConfigInt>("redis-slave-check-period")->read();

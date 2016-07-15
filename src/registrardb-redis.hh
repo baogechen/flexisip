@@ -28,11 +28,12 @@
 #include "agent.hh"
 
 struct RedisParameters {
-	RedisParameters() : port(0), timeout(0) {
+	RedisParameters() : db(0), port(0), timeout(0) {
 	}
 	std::string domain;
 	std::string auth;
 	int port;
+	int db;
 	int timeout;
 	int mSlaveCheckTimeout;
 };
@@ -97,6 +98,7 @@ class RegistrarDbRedisAsync : public RegistrarDb {
 	std::string mDomain;
 	std::string mAuthPassword;
 	int mPort;
+	int mDb;
 	int mTimeout;
 	su_root_t *mRoot;
 	vector<RedisHost> mSlaves;
