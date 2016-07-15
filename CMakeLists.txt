@@ -26,7 +26,7 @@ project(flexisip C CXX)
 
 set(FLEXISIP_MAJOR_VERSION "1")
 set(FLEXISIP_MINOR_VERSION "0")
-set(FLEXISIP_MICRO_VERSION "9")
+set(FLEXISIP_MICRO_VERSION "10")
 set(FLEXISIP_VERSION "${FLEXISIP_MAJOR_VERSION}.${FLEXISIP_MINOR_VERSION}.${FLEXISIP_MICRO_VERSION}")
 
 include(CMakePushCheckState)
@@ -35,6 +35,7 @@ include(CheckSymbolExists)
 include(CheckFunctionExists)
 include(FeatureSummary)
 include(CheckCXXSourceCompiles)
+include(GNUInstallDirs)
 
 option(ENABLE_DATEHANDLER "Build DateHandler module" NO)
 option(ENABLE_DOC "Build documentation" YES)
@@ -84,6 +85,7 @@ else()
 	find_package(ORTP 0.21 REQUIRED)
 endif()
 
+find_package(BcToolbox 0.0.3 REQUIRED)
 
 find_program(XSDCXX_PROG NAMES "xsdcxx" "xsd"
 	HINTS ${XSDCXX_ROOT_PATH}/bin

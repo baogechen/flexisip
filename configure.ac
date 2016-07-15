@@ -20,7 +20,7 @@ dnl    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 AC_PREREQ([2.61])
 
-AC_INIT([flexisip], [1.0.9], [simon.morlat@linphone.org])
+AC_INIT([flexisip], [1.0.10], [simon.morlat@linphone.org])
 
 AC_CONFIG_SRCDIR([src/agent.cc])
 AC_CONFIG_HEADERS([flexisip-config.h])
@@ -638,7 +638,7 @@ AC_SUBST(CONFIG_DIR)
 #Keep this at the end
 if test x$strictness = xyes ; then
 		CFLAGS="$CFLAGS -Wall -Werror -fno-strict-aliasing"
-		WARNINGCXXFLAGS="-Wall -Werror -fno-strict-aliasing -Wno-error=deprecated-declarations"
+		WARNINGCXXFLAGS="-Wall -Werror -fno-strict-aliasing -Wno-error=deprecated-declarations -Wno-error=unknown-pragmas"
 fi
 
 AC_SUBST(WARNINGCXXFLAGS)

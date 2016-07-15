@@ -153,7 +153,7 @@ void NotificationEntry::mibFragment(ostream &ost, string spacing) const {
 		<< spacing << "	OBJECTS	{	flNotifString	} " << endl
 		<< spacing << "	STATUS	current" << endl
 		<< spacing << "	DESCRIPTION" << endl
-		<< spacing << "	\"" << getHelp() << endl
+		<< spacing << "	\"" << escapeDoubleQuotes(getHelp()) << endl
 		<< spacing << "	"
 		<< " PN:" << getPrettyName() << "\"" << endl
 		<< spacing << "	::= { " << sanitize(getParent()->getName()) << " " << mOid->getLeaf() << " }" << endl;
@@ -235,7 +235,7 @@ void GenericEntry::doMibFragment(ostream &ostr, const string &def, const string 
 		 << spacing << "	MAX-ACCESS	" << access << endl
 		 << spacing << "	STATUS	current" << endl
 		 << spacing << "	DESCRIPTION" << endl
-		 << spacing << "	\"" << getHelp() << endl
+		 << spacing << "	\"" << escapeDoubleQuotes(getHelp()) << endl
 		 << spacing << "	"
 		 << " Default:" << def << endl
 		 << spacing << "	"
@@ -340,6 +340,18 @@ GenericEntry::GenericEntry(const string &name, GenericValueType type, const stri
 	if (oid_index == 0) {
 		mOidLeaf = Oid::oidFromHashedString(name);
 	}
+}
+
+std::string GenericEntry::escapeDoubleQuotes(const std::string &str) {
+	string escapedStr = "";
+	for(auto it=str.cbegin(); it!=str.cend(); it++) {
+		if(*it == '"') {
+			escapedStr += "''";
+		} else {
+			escapedStr += *it;
+		}
+	}
+	return escapedStr;
 }
 
 void GenericEntry::setParent(GenericEntry *parent) {
@@ -735,11 +747,15 @@ GenericManager::GenericManager()
 		 "\t- 'require-peer-certificate' taking for value '0' or '1', to indicate whether clients connecting are "
 		 "required to present"
 		 " a client certificate.\n"
+		 "Specifying a sip uri with transport=tls is not allowed: the 'sips' scheme must be used. As requested by SIP RFC, "
+		 "IPv6 address must be enclosed within brakets.\n"
 		 "Here are some examples to understand:\n"
 		 "* listen on all local interfaces for udp and tcp, on standart port:\n"
 		 "\ttransports=sip:*\n"
 		 "* listen on all local interfaces for udp,tcp and tls, on standart ports:\n"
 		 "\ttransports=sip:* sips:*\n"
+		  "* listen only a specific IPv6 interface, on standart ports, with udp, tcp and tls\n"
+		 "\ttransports=sip:[2a01:e34:edc3:4d0:7dac:4a4f:22b6:2083] sips:[2a01:e34:edc3:4d0:7dac:4a4f:22b6:2083]\n"
 		 "* listen on tls localhost with 2 different ports and SSL certificates:\n"
 		 "\ttransports=sips:localhost:5061;tls-certificates-dir=path_a "
 		 "sips:localhost:5062;tls-certificates-dir=path_b\n"

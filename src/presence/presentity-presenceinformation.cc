@@ -178,8 +178,15 @@ string PresentityPresenceInformation::refreshTuplesForEtag(const string &eTag, i
 	return setOrUpdate(NULL, NULL, &eTag, expires);
 }
 
-void PresentityPresenceInformation::setDefaultElement(void) {
+void PresentityPresenceInformation::setDefaultElement(const char *contact) {
 	mDefaultInformationElement = make_shared<PresenceInformationElement>(getEntity());
+
+	if (contact) {
+		for (auto & tup : mDefaultInformationElement->getTuples()) {
+			tup->setContact(::pidf::Contact(contact));
+		}
+	}
+
 	notifyAll();
 }
 
@@ -191,7 +198,7 @@ void PresentityPresenceInformation::removeTuplesForEtag(const string &eTag) {
 		delete informationElement;
 		notifyAll(); // Removing an event state change global state, so it should be notified
 	} else
-		SLOGD << "No tulpes found for etag [" << eTag << "]";
+		SLOGD << "No tuples found for etag [" << eTag << "]";
 }
 
 FlexisipException &operator<<(FlexisipException &ex, const PresentityPresenceInformation &p) {
@@ -385,9 +392,9 @@ static string generate_presence_id(void) {
 	static char presence_id_valid_start_characters[] = ":_abcdefghijklmnopqrstuvwxyz";
 	char id[7];
 	int i;
-	id[0] = presence_id_valid_start_characters[ortp_random() % (sizeof(presence_id_valid_start_characters) - 1)];
+	id[0] = presence_id_valid_start_characters[belle_sip_random() % (sizeof(presence_id_valid_start_characters) - 1)];
 	for (i = 1; i < 6; i++) {
-		id[i] = presence_id_valid_characters[ortp_random() % (sizeof(presence_id_valid_characters) - 1)];
+		id[i] = presence_id_valid_characters[belle_sip_random() % (sizeof(presence_id_valid_characters) - 1)];
 	}
 	id[6] = '\0';
 

@@ -77,8 +77,8 @@ class ModuleInfoBase {
 	}
 
 	enum ModuleOid {
-		DoSProtection = 2,
 		SanityChecker = 3,
+		DoSProtection = 4,
 		GarbageIn = 5,
 		NatHelper = 30,
 		Authentication = 60,
@@ -236,6 +236,7 @@ class ModuleToolbox {
 	static string getHost(const char *host);
 	static string urlGetHost(url_t *url);
 	static void urlSetHost(su_home_t *home, url_t *url, const char *host);
+	static bool urlIsResolved(url_t *uri);
 	/**
 	* Returns true if via and url represent the same network address.
 	**/
